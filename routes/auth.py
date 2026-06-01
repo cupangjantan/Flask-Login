@@ -42,12 +42,11 @@ def login():
                 session.permanent = True
                 return redirect(url_for('dashboard.home'))
             else:
-                print(f"{user['password']} dan {password_hashed}")
                 return render_template('login.html', error='Password anda salah')
 
         except Exception as e:
             print(f'Database error: {e}')
-            return render_template('login.html', error='Terjadi kesalahan sistem')
+            return render_template('login.html', error='Terjadi kesalahan sistem. Silahkan coba lagi.')
         finally:
             if conn:  
                 conn.close()
