@@ -33,7 +33,6 @@ def login():
             user = cursor.fetchone()
             cursor.close()
 
-            # ✅ Cek user None dulu
             if user is None:
                 return render_template('login.html', error='Username tidak ditemukan')
             
@@ -50,7 +49,7 @@ def login():
             print(f'Database error: {e}')
             return render_template('login.html', error='Terjadi kesalahan sistem')
         finally:
-            if conn:  # ✅ Cek conn sebelum close
+            if conn:  
                 conn.close()
 
     return render_template('login.html')      
