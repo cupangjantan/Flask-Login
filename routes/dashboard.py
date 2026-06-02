@@ -10,3 +10,8 @@ def home():
         return render_template('home.html', username=session['username'])
     else:
         return redirect(url_for('auth.login'))
+
+@dash.route('/logout/')
+def logout():
+    session.clear()
+    return redirect(url_for('auth.login'))
