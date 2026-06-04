@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, request, url_for, session
-import config.config as config
+import app.config.config as config
 import hashlib
 
 auth = Blueprint('auth', __name__)

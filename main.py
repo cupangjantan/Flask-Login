@@ -1,12 +1,6 @@
-from flask import Flask
-from routes.auth import auth
-from routes.dashboard import dash 
+from app import create_app
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'hard-to-guess-string-12345!@#$%'
+app = create_app()
 
-app.register_blueprint(auth)
-app.register_blueprint(dash)
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
