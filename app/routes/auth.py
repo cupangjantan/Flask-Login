@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, request, url_for, session
 import app.config.config as config
 import hashlib
+from app import bcrypt
 
 auth = Blueprint('auth', __name__)
 
@@ -24,7 +25,7 @@ def login():
         elif not password:
             return render_template('login.html', error='Password tidak boleh kosong')
         
-        password_hashed = hashlib.sha256(password.encode()).hexdigest()
+        password_hashed = bcrypt.generate_password_hash(password).decode('utf-8')
         conn = config.get_conn()
 
         if not conn:
@@ -39,7 +40,7 @@ def login():
             if user is None:
                 return render_template('login.html', error='Username tidak ditemukan')
             
-            if user and user['password'] == password_hashed:
+            if user and  bcrypt.check_password_hash(user['password'], password):
                 session['username'] = user['username']
                 session['user_id'] = user['id']
                 session.permanent = True
@@ -74,7 +75,7 @@ def register():
         elif password != confirm_password:
             return render_template('register.html', error='Password dan Konfirmasi Password tidak cocok')
 
-        password_hashed = hashlib.sha256(password.encode()).hexdigest()
+        password_hashed = bcrypt.generate_password_hash(password).decode('utf-8')
         conn = config.get_conn()
 
         if not conn:

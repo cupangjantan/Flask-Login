@@ -1,8 +1,13 @@
 from flask import Flask
+from flask_bcrypt import Bcrypt
+
+bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'hard-to-guess-string-12345!@#$%'
+    
+    bcrypt.init_app(app)
 
     from app.routes.auth import auth
     from app.routes.dashboard import dash 
